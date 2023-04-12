@@ -26,13 +26,13 @@ module.exports = {
   // },
   //打包app时放开该配置
   //publicPath:'/',
-  configureWebpack: config => {
+  configureWebpack: (config) => {
     //生产环境取消 console.log
     if (process.env.NODE_ENV === 'production') {
       config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true
     }
   },
-  chainWebpack: config => {
+  chainWebpack: (config) => {
     config.resolve.alias
       .set('@$', resolve('src'))
       .set('@api', resolve('src/api'))
@@ -46,18 +46,13 @@ module.exports = {
         new CompressionPlugin({
           test: /\.(js|css|less)$/, // 匹配文件名
           threshold: 10240, // 对超过10k的数据压缩
-          deleteOriginalAssets: false // 不删除源文件
+          deleteOriginalAssets: false, // 不删除源文件
         })
       )
     }
 
     // 配置 webpack 识别 markdown 为普通的文件
-    config.module
-      .rule('markdown')
-      .test(/\.md$/)
-      .use()
-      .loader('file-loader')
-      .end()
+    config.module.rule('markdown').test(/\.md$/).use().loader('file-loader').end()
 
     // 编译vxe-table包里的es6代码，解决IE11兼容问题
     config.module
@@ -78,11 +73,11 @@ module.exports = {
           /* less 变量覆盖，用于自定义 ant design 主题 */
           'primary-color': '#1890FF',
           'link-color': '#1890FF',
-          'border-radius-base': '4px'
+          'border-radius-base': '4px',
         },
-        javascriptEnabled: true
-      }
-    }
+        javascriptEnabled: true,
+      },
+    },
   },
 
   devServer: {
@@ -108,12 +103,12 @@ module.exports = {
       /* 注意：jeecgboot前端做了改造，此处不需要配置跨域和后台接口（只需要改.env相关配置文件即可）
           issues/3462 很多人此处做了配置，导致刷新前端404问题，请一定注意*/
       '/jeecg-boot': {
-        target: 'https://api.boot.jeecg.com', //'http://localhost:8080',
+        target: 'http://81.71.152.233:8080', //'http://localhost:8080',
         ws: false,
-        changeOrigin: true
-      }
-    }
+        changeOrigin: true,
+      },
+    },
   },
 
-  lintOnSave: undefined
+  lintOnSave: undefined,
 }

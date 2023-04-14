@@ -105,7 +105,7 @@ export default {
     handleRememberMeChange(e) {
       this.rememberMe = e.target.checked
     },
-    /**跳转到登录页面的参数-账号获取*/
+    // 跳转到登录页面的参数-账号获取
     getRouterData() {
       this.$nextTick(() => {
         let temp = this.$route.params.username || this.$route.query.username || ''
@@ -115,14 +115,14 @@ export default {
       })
     },
 
-    //登录
+    // 登录
     handleSubmit() {
       this.loginBtn = true
       if (this.customActiveKey === 'tab1') {
         // 使用账户密码登录
         this.$refs.alogin.handleLogin(this.rememberMe)
       } else {
-        //手机号码登录
+        // 手机号码登录
         this.$refs.plogin.handleLogin(this.rememberMe)
       }
     },
@@ -134,7 +134,7 @@ export default {
     requestSuccess(loginResult) {
       this.$refs.loginSelect.show(loginResult)
     },
-    //登录后台失败
+    // 登录后台失败
     requestFailed(err) {
       let description = ((err.response || {}).data || {}).message || err.message || '请求出现错误，请稍后再试'
       this.$notification['error']({
@@ -142,7 +142,7 @@ export default {
         description: description,
         duration: 4
       })
-      //账户密码登录错误后更新验证码
+      // 账户密码登录错误后更新验证码
       if (this.customActiveKey === 'tab1' && description.indexOf('密码错误') > 0) {
         this.$refs.alogin.handleChangeCheckCode()
       }
